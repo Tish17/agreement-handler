@@ -3,8 +3,10 @@ package com.example.agreementhandler.controller;
 import com.example.agreementhandler.entity.Agreement;
 import com.example.agreementhandler.entity.Statistic;
 import com.example.agreementhandler.service.AgreementService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,7 +27,11 @@ public class AgreementController {
 
     @GetMapping("/agreements/{id}")
     public ResponseEntity<Agreement> getById(@PathVariable Integer id) {
-        return ResponseEntity.ok(agreementService.getById(id));
+        Agreement result = agreementService.getById(id);
+        if (result == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/agreements")
@@ -36,7 +42,9 @@ public class AgreementController {
 
     @DeleteMapping("/agreements/{id}")
     public ResponseEntity<String> delete(@PathVariable Integer id) {
-        agreementService.delete(id);
+        if (!agreementService.delete(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
         return ResponseEntity.ok("");
     }
 

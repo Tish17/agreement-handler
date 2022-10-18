@@ -34,11 +34,11 @@ public class AgreementService {
         return filter(clientId, productId);
     }
 
-    public void delete(Integer id) {
+    public boolean delete(Integer id) {
         Agreement agreementToDelete = agreements.stream()
                 .filter(agreement -> agreement.getAgreementId().equals(id))
                 .findFirst().orElse(null);
-        agreements.remove(agreementToDelete);
+        return agreements.remove(agreementToDelete);
     }
 
     public Statistic getStatistic(Integer clientId, Integer productId) {
