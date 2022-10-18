@@ -34,9 +34,9 @@ public class AgreementController {
     }
 
     @DeleteMapping("/agreements/{id}")
-    public ResponseEntity.BodyBuilder delete(@PathVariable Integer id) {
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
         agreementService.delete(id);
-        return ResponseEntity.ok();
+        return ResponseEntity.ok("");
     }
 
     @GetMapping("/statistics")
