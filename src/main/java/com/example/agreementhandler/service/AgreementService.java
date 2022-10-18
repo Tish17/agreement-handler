@@ -15,7 +15,7 @@ public class AgreementService {
 
     private static int count = 1;
 
-    private List<Agreement> agreements = new ArrayList<>();
+    private final List<Agreement> agreements = new ArrayList<>();
 
     public Agreement create(Agreement agreement) {
         agreement.setAgreementId(count++);
