@@ -15,4 +15,20 @@ public class Statistic {
         this.maxAmount = maxAmount;
         this.sum = sum;
     }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public BigDecimal getMinAmount() {
+        return minAmount;
+    }
+
+    public BigDecimal getMaxAmount() {
+        return maxAmount;
+    }
+
+    public BigDecimal getSum() {
+        return sum;
+    }
 }
