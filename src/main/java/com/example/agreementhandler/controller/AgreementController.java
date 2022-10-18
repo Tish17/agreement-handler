@@ -6,6 +6,7 @@ import com.example.agreementhandler.service.AgreementService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class AgreementController {
     }
 
     @PostMapping("/agreements")
-    public ResponseEntity<Agreement> create(@RequestBody Agreement agreement) {
+    public ResponseEntity<Agreement> create(@RequestBody @Valid Agreement agreement) {
         return ResponseEntity.ok(agreementService.create(agreement));
     }
 

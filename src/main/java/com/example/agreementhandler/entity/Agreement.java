@@ -1,5 +1,8 @@
 package com.example.agreementhandler.entity;
 
+import org.springframework.lang.NonNull;
+
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -7,10 +10,19 @@ import java.time.LocalDateTime;
 public class Agreement {
 
     private Integer agreementId;
+
+    @NotNull
     private Integer clientId;
+
+    @NotNull
     private Integer productId;
+
+    @NotNull
     private BigDecimal amount;
+
+    @NotNull
     private LocalDate startDate;
+
     private LocalDateTime timestamp;
 
     public Agreement() {
