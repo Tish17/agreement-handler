@@ -28,8 +28,9 @@ public class AgreementController {
     }
 
     @GetMapping("/agreements")
-    public ResponseEntity<List<Agreement>> getAll() {
-        return ResponseEntity.ok(agreementService.getAll());
+    public ResponseEntity<List<Agreement>> getAll(@RequestParam(required = false) Integer clientId,
+                                                  @RequestParam(required = false) Integer productId) {
+        return ResponseEntity.ok(agreementService.getAll(clientId, productId));
     }
 
     @DeleteMapping("/agreements/{id}")
@@ -39,7 +40,8 @@ public class AgreementController {
     }
 
     @GetMapping("/statistics")
-    public ResponseEntity<Statistic> getStatistic() {
-        return ResponseEntity.ok(agreementService.getStatistic());
+    public ResponseEntity<Statistic> getStatistic(@RequestParam(required = false) Integer clientId,
+                                                  @RequestParam(required = false) Integer productId) {
+        return ResponseEntity.ok(agreementService.getStatistic(clientId, productId));
     }
 }

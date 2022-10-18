@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AgreementService {
@@ -29,8 +30,8 @@ public class AgreementService {
                 .findFirst().orElse(null);
     }
 
-    public List<Agreement> getAll() {
-        return agreements;
+    public List<Agreement> getAll(Integer clientId, Integer productId) {
+        return filter(clientId, productId);
     }
 
     public void delete(Integer id) {
@@ -40,16 +41,39 @@ public class AgreementService {
         agreements.remove(agreementToDelete);
     }
 
-    public Statistic getStatistic() {
+    public Statistic getStatistic(Integer clientId, Integer productId) {
+        List<Agreement> result = filter(clientId, productId);
         BigDecimal minAmount = new BigDecimal("1000000000000000");
         BigDecimal maxAmount = new BigDecimal(0);
         BigDecimal sum = new BigDecimal(0);
-        for (Agreement agreement : agreements) {
+        for (Agreement agreement : result) {
             BigDecimal amount = agreement.getAmount();
             minAmount = minAmount.min(amount);
             maxAmount = maxAmount.max(amount);
             sum = sum.add(amount);
         }
-        return new Statistic(agreements.size(), minAmount, maxAmount, sum);
+        return new Statistic(result.size(), minAmount, maxAmount, sum);
+    }
+
+    private List<Agreement> filter(Integer clientId, Integer productId) {
+        if (clientId == null && productId == null) {
+            return agreements;
+        }
+        List<Agreement> result;
+        if (clientId != null && productId == null) {
+            result = agreements.stream()
+                    .filter(agreement -> agreement.getClientId().equals(clientId))
+                    .collect(Collectors.toList());
+        } else if (clientId == null) {
+            result = agreements.stream()
+                    .filter(agreement -> agreement.getProductId().equals(productId))
+                    .collect(Collectors.toList());
+        } else {
+            result = agreements.stream()
+                    .filter(agreement -> agreement.getClientId().equals(clientId))
+                    .filter(agreement -> agreement.getProductId().equals(productId))
+                    .collect(Collectors.toList());
+        }
+        return result;
     }
 }

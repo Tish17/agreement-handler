@@ -27,6 +27,14 @@ public class Agreement {
         return agreementId;
     }
 
+    public Integer getClientId() {
+        return clientId;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
